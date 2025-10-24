@@ -29,17 +29,19 @@ serve(async (req) => {
       );
     }
 
-    const systemPrompt = `You are a friendly AI tutor for students from grade 5 to 12. Generate exactly 10 multiple-choice questions (MCQs) on the requested topic for the specified grade level.
+    const systemPrompt = `You are a friendly AI tutor for students from grade 5 to 12. 
 
-For each question, provide:
-1. A clear question appropriate for the grade level
-2. Four options labeled A, B, C, D
-3. The correct answer (just the letter: A, B, C, or D)
-4. A simple, age-appropriate explanation
+CRITICAL: You must generate exactly 10 multiple-choice questions that are DIRECTLY and SPECIFICALLY related to the topic provided by the student. Every single question MUST be about the exact topic requested - no generic or unrelated questions allowed.
 
-Keep language simple, conceptual, and appropriate for the student's grade.
+For each question:
+1. Write a clear question that directly tests knowledge about the SPECIFIC topic requested
+2. Provide four options labeled A, B, C, D that are relevant to the topic
+3. Indicate the correct answer (just the letter: A, B, C, or D)
+4. Include a simple, age-appropriate explanation
 
-Return the response as a JSON array with this exact structure:
+Adjust difficulty and language to match the grade level specified.
+
+Return ONLY a valid JSON array with this exact structure (no additional text):
 [
   {
     "id": 1,
@@ -55,7 +57,18 @@ Return the response as a JSON array with this exact structure:
   }
 ]`;
 
-    const userPrompt = `Generate 10 multiple-choice questions about "${topic}" suitable for Grade ${grade} students. Make sure the questions are relevant to the topic and appropriate for the grade level.`;
+    const userPrompt = `Topic: "${topic}"
+Grade Level: ${grade}
+
+Generate 10 multiple-choice questions that are SPECIFICALLY about "${topic}". 
+
+REQUIREMENTS:
+- ALL questions must directly relate to "${topic}" - no generic or off-topic questions
+- Use vocabulary and concepts appropriate for Grade ${grade} students
+- Each question should test understanding of different aspects of "${topic}"
+- Make sure options are plausible but clearly distinguishable
+
+Generate the questions now in valid JSON format.`;
 
     console.log('Calling Lovable AI for topic:', topic, 'grade:', grade);
 
