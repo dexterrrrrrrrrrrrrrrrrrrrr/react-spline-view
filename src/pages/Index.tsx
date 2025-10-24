@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { QuizSetup } from '@/components/QuizSetup'
 import { QuizCard } from '@/components/QuizCard'
-import { generateSampleQuestions } from '@/data/sampleQuestions'
 import type { Question } from '@/components/QuizCard'
 
 const Index = () => {
@@ -10,10 +9,9 @@ const Index = () => {
   const [topic, setTopic] = useState('')
   const [grade, setGrade] = useState('')
 
-  const handleStartQuiz = (selectedTopic: string, selectedGrade: string) => {
+  const handleStartQuiz = (selectedTopic: string, selectedGrade: string, generatedQuestions: Question[]) => {
     setTopic(selectedTopic)
     setGrade(selectedGrade)
-    const generatedQuestions = generateSampleQuestions(selectedTopic, selectedGrade)
     setQuestions(generatedQuestions)
     setQuizStarted(true)
   }
